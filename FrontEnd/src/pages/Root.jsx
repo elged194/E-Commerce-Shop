@@ -1,13 +1,12 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Appbar from "MUI-components/Appbar";
-import Drawerr from "MUI-components/Drawer";
 import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import getDesignTokens from "styles/MyTheme";
+import Appbar from "../MUI-components/Appbar";
+import getDesignTokens from "../styles/MyTheme";
+import Drawerr from "../MUI-components/Drawer";
 
 const drawerWidth = 240;
-
 
 const Root = () => {
   const [mode, setmyMOde] = useState(
@@ -17,11 +16,6 @@ const Root = () => {
       ? "light"
       : "dark"
   );
-
-
- 
-
-
 
   const [noneORblock, setnoneORblock] = useState("none");
   const [drawerType, setdrawerType] = useState("permanent");
@@ -35,7 +29,6 @@ const Root = () => {
     setdrawerType("permanent");
     setnoneORblock("none");
   };
-
 
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
