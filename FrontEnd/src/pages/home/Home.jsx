@@ -1,5 +1,4 @@
 import "./Home.css";
-import React from "react";
 import {
   Card,
   CardActions,
@@ -9,8 +8,12 @@ import {
   Button,
   Stack,
   useTheme,
+  CircularProgress,
+  Box,
 } from "@mui/material";
 import { useGetPokemonByNameQuery } from "../../Redux/pokemonAPI";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Redux/counterSlice";
 // ------------------------------------------------------------------
 // const myListCard = [
 //   {
@@ -41,52 +44,67 @@ import { useGetPokemonByNameQuery } from "../../Redux/pokemonAPI";
 
 // ------------------------------------------------------------------
 const Home = () => {
-  // Using a query hook automatically fetches data and returns query values
   const { data, error, isLoading } = useGetPokemonByNameQuery();
-console.log(error.code
-  )
   const theme = useTheme();
-  return (
+  const dispatch = useDispatch()
 
-    <Stack
-      direction={"row"}
-      sx={{ flexWrap: "wrap", justifyContent: "center" }}
-    >
-      {data.map((e) => {
-        return (
-          <Card sx={{ maxWidth: 277, mx: 2, my: 2 }} key={e.id} >
-            <CardMedia
-              component="img"
-              height="194"
-              image={e.imageLink}
-              alt={e.productName}
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {e.description}
-              </Typography>
-            </CardContent>
-            <CardActions
-              disableSpacing
-              sx={{ justifyContent: "space-between" }}
-            >
-              <Button
-                sx={{ textTransform: "capitalize" }}
-                variant="contained"
-                color="primary"
+  if(error){
+    return(
+      <h1>error</h1>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (data) {
+    return (
+      <Stack
+        direction={"row"}
+        sx={{ flexWrap: "wrap", justifyContent: "center" }}
+      >
+        {data.map((e) => {
+          return (
+            <Card className="card" sx={{ maxWidth: 277, mx: 2, my: 2 }} key={e.id}>
+              <CardMedia
+                component="img"
+                height="277"
+                image={e.imageLink}
+                alt={e.productName}
+              />
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  {e.description}
+                </Typography>
+              </CardContent>
+              <CardActions
+                disableSpacing
+                sx={{ justifyContent: "space-between" }}
               >
-                add to Cart
-              </Button>
+                <Button
+                  sx={{ textTransform: "capitalize" }}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => dispatch(addToCart(e))}
+                >
+                  add to Cart
+                </Button>
 
-              <Typography variant="body1" color={theme.palette.success.light}>
-                {e.price +"$"}
-              </Typography>
-            </CardActions>
-          </Card>
-        );
-      })}
-    </Stack>
-  );
+                <Typography variant="body1" color={theme.palette.success.light}>
+                  {e.price + "$"}
+                </Typography>
+              </CardActions>
+            </Card>
+          );
+        })}
+      </Stack>
+    );
+  }
 };
 
 export default Home;

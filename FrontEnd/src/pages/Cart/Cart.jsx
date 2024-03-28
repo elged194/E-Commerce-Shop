@@ -11,8 +11,17 @@ import "./Cart.css";
 import React from "react";
 import { Add, Delete, Remove } from "@mui/icons-material";
 import styled from "@emotion/styled";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  decreasNumberItems,
+  deleteItem,
+  increasNumberItems,
+} from "../../Redux/counterSlice";
 
 const Cart = () => {
+  const { selectedPrpdect } = useSelector((state) => state.cartt);
+  const dispatch = useDispatch();
+
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       right: 0,
@@ -26,41 +35,45 @@ const Cart = () => {
 
   return (
     <Box sx={{ width: { md: "50%", xs: "90%" } }}>
-      <Paper dir="rtl" className="item-container">
-        <div className="img-title-parent">
-          <img src="${}" alt="" />
-          <p className="product-name">${}</p>
-        </div>
+      {selectedPrpdect.map((e) => {
+        return (
+          <Paper dir="rtl" className="item-container" key={e.id}>
+            <div className="img-title-parent">
+              <img src={e.imageLink} alt="" />
+              <p className="product-name">{e.productName}</p>
+            </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "27%",
-          }}
-        >
-          <IconButton>
-            <Add />
-          </IconButton>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "27%",
+              }}
+            >
+              <IconButton onClick={() => dispatch(increasNumberItems(e))}>
+                <Add />
+              </IconButton>
 
-          <StyledBadge badgeContent={4} color="secondary" />
+              <StyledBadge badgeContent={4} color="secondary" />
 
-          <IconButton>
-            <Remove />
-          </IconButton>
-        </div>
+              <IconButton onClick={() => dispatch(decreasNumberItems(e))}>
+                <Remove />
+              </IconButton>
+            </div>
 
-        <div className="price">${}</div>
+            <div className="price">{e.price}$</div>
 
-        <IconButton>
-          <Delete color="error" />
-        </IconButton>
-      </Paper>
+            <IconButton onClick={() => dispatch(deleteItem(e))} >
+              <Delete color="error" />
+            </IconButton>
+          </Paper>
+        );
+      })}
 
       <Paper>
         <div className="sub-total">
-          <Typography variant="h6"  p={2}>
+          <Typography variant="h6" p={2}>
             Cart Summay
           </Typography>
 
@@ -76,7 +89,9 @@ const Cart = () => {
 
         <Divider />
 
-        <Button fullWidth variant="contained">Check</Button>
+        <Button fullWidth variant="contained">
+          Check
+        </Button>
       </Paper>
     </Box>
   );
