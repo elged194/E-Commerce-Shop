@@ -19,8 +19,8 @@ import {
 } from "../../Redux/counterSlice";
 
 const Cart = () => {
-  const { selectedPrpdect } = useSelector((state) => state.cartt);
-  const dispatch = useDispatch();
+  const { selectedPrpdect } = useSelector((state) => state.cartt); // acces to the data in store
+  const dispatch = useDispatch(); //  access to the functions of redux
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -64,7 +64,7 @@ const Cart = () => {
 
             <div className="price">{e.price}$</div>
 
-            <IconButton onClick={() => dispatch(deleteItem(e))} >
+            <IconButton onClick={() => dispatch(deleteItem(e))}>
               <Delete color="error" />
             </IconButton>
           </Paper>

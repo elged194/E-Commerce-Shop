@@ -8,6 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Brightness4, Brightness7, Home, ShoppingCart } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
+import { useSelector } from "react-redux";
 // ------------------------------------------------------------------
 
 const Drawerr = ({
@@ -17,6 +18,8 @@ const Drawerr = ({
   drawerType,
   hideDrawer,
 }) => {
+  const { selectedPrpdect } = useSelector((state) => state.cartt); // acces to the data in store
+
   const currentLocation = useLocation();
 
   const navigate = useNavigate();
@@ -36,7 +39,7 @@ const Drawerr = ({
     {
       text: "Cart",
       icon: (
-        <StyledBadge badgeContent={4} color="secondary">
+        <StyledBadge badgeContent={selectedPrpdect.length} color="secondary">
           <ShoppingCart />
         </StyledBadge>
       ),
