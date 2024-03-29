@@ -17,19 +17,32 @@ export const counterSlice = createSlice({
         state.selectedPrpdect.push( productQuantity )
     },
     increasNumberItems: (state, action) => {
+        // state.value += action.payload;
         const increasQuantty = state.selectedPrpdect.find((e)=>{
             return( e.id === action.payload.id);
         })
         increasQuantty.quantity += 1
     },
     decreasNumberItems: (state, action) => {
+        // state.value += action.payload;
         const increasQuantty = state.selectedPrpdect.find((e)=>{
             return( e.id === action.payload.id);
         })
         increasQuantty.quantity -= 1
+
+        if(increasQuantty.quantity === 0){
+          const newArr = state.selectedPrpdect.filter((e)=>{
+            return (e.id !== action.payload.id )
+          })
+          state.selectedPrpdect = newArr
+        }
     },
     deleteItem: (state, action) => {
-        
+        // state.value += action.payload;
+        const newArr = state.selectedPrpdect.filter((e)=>{
+          return(e.id !== action.payload.id)
+        })
+        state.selectedPrpdect = newArr
     },
   },
 });
