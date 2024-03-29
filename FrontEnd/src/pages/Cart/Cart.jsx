@@ -55,7 +55,7 @@ const Cart = () => {
                 <Add />
               </IconButton>
 
-              <StyledBadge badgeContent={4} color="secondary" />
+              <StyledBadge badgeContent={e.quantity} color="secondary" />
 
               <IconButton onClick={() => dispatch(decreasNumberItems(e))}>
                 <Remove />

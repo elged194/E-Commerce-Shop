@@ -15,19 +15,21 @@ export const counterSlice = createSlice({
         // state.value += action.payload;
         const productQuantity = {...action.payload , "quantity":1 };
         state.selectedPrpdect.push( productQuantity )
-
     },
     increasNumberItems: (state, action) => {
-      //   state.value += action.payload;
-      console.log("+");
+        const increasQuantty = state.selectedPrpdect.find((e)=>{
+            return( e.id === action.payload.id);
+        })
+        increasQuantty.quantity += 1
     },
     decreasNumberItems: (state, action) => {
-      //   state.value += action.payload;
-      console.log("-");
+        const increasQuantty = state.selectedPrpdect.find((e)=>{
+            return( e.id === action.payload.id);
+        })
+        increasQuantty.quantity -= 1
     },
     deleteItem: (state, action) => {
-      //   state.value += action.payload;
-      console.log("delet");
+        
     },
   },
 });
