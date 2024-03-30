@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  selectedPrpdect: [
-
-  ],
+  selectedPrpdect: [],
+  selectedPrpdectID: [],
 };
 
 export const counterSlice = createSlice({
@@ -12,37 +11,44 @@ export const counterSlice = createSlice({
   reducers: {
     //  actions === (e) ==> API
     addToCart: (state, action) => {
-        // state.value += action.payload;
-        const productQuantity = {...action.payload , "quantity":1 };
-        state.selectedPrpdect.push( productQuantity )
+      // state.value += action.payload;
+      const productQuantity = { ...action.payload, quantity: 1 };
+      state.selectedPrpdect.push(productQuantity);
+
+      state.selectedPrpdectID.push(action.payload.id);
     },
     increasNumberItems: (state, action) => {
-        // state.value += action.payload;
-        const increasQuantty = state.selectedPrpdect.find((e)=>{
-            return( e.id === action.payload.id);
-        })
-        increasQuantty.quantity += 1
+      // state.value += action.payload;
+      const increasQuantty = state.selectedPrpdect.find((e) => {
+        return e.id === action.payload.id;
+      });
+      increasQuantty.quantity += 1;
     },
     decreasNumberItems: (state, action) => {
-        // state.value += action.payload;
-        const increasQuantty = state.selectedPrpdect.find((e)=>{
-            return( e.id === action.payload.id);
-        })
-        increasQuantty.quantity -= 1
+      // state.value += action.payload;
+      const increasQuantty = state.selectedPrpdect.find((e) => {
+        return e.id === action.payload.id;
+      });
+      increasQuantty.quantity -= 1;
 
-        if(increasQuantty.quantity === 0){
-          const newArr = state.selectedPrpdect.filter((e)=>{
-            return (e.id !== action.payload.id )
-          })
-          state.selectedPrpdect = newArr
-        }
+      if (increasQuantty.quantity === 0) {
+        const newArr = state.selectedPrpdect.filter((e) => {
+          return e.id !== action.payload.id;
+        });
+        state.selectedPrpdect = newArr;
+
+        const newArr2 = state.selectedPrpdectID.filter((e) => {
+          return e !== action.payload.id;
+        });
+        state.selectedPrpdectID = newArr2;
+      }
     },
     deleteItem: (state, action) => {
-        // state.value += action.payload;
-        const newArr = state.selectedPrpdect.filter((e)=>{
-          return(e.id !== action.payload.id)
-        })
-        state.selectedPrpdect = newArr
+      // state.value += action.payload;
+      const newArr = state.selectedPrpdect.filter((e) => {
+        return e.id !== action.payload.id;
+      });
+      state.selectedPrpdect = newArr;
     },
   },
 });

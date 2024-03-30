@@ -10,10 +10,20 @@ import {
   useTheme,
   CircularProgress,
   Box,
+  IconButton,
+  Badge,
 } from "@mui/material";
 import { useGetPokemonByNameQuery } from "../../Redux/pokemonAPI";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../Redux/counterSlice";
+import {
+  addToCart,
+  decreasNumberItems,
+  increasNumberItems,
+} from "../../Redux/counterSlice";
+import { Add, Remove } from "@mui/icons-material";
+import styled from "@emotion/styled";
+import { useSelector } from "react-redux";
+
 // ------------------------------------------------------------------
 // const myListCard = [
 //   {
@@ -45,13 +55,31 @@ import { addToCart } from "../../Redux/counterSlice";
 // ------------------------------------------------------------------
 const Home = () => {
   const { data, error, isLoading } = useGetPokemonByNameQuery();
+  const { selectedPrpdectID ,selectedPrpdect } = useSelector((state) => state.cartt); // acces to the data in store
   const theme = useTheme();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  if(error){
-    return(
-      <h1>error</h1>
-    )
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      right: 0,
+      top: 0,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "13px 8px",
+      fontSize: "15px",
+      borderRadius: "50%",
+    },
+  }));
+
+  const productQuantity =(e)=>{
+    const myProduct = selectedPrpdect.find((item ) => {
+      return item.id === e.id
+    });
+    
+    return myProduct.quantity
+  }
+
+  if (error) {
+    return <h1>error</h1>;
   }
 
   if (isLoading) {
@@ -68,9 +96,13 @@ const Home = () => {
         direction={"row"}
         sx={{ flexWrap: "wrap", justifyContent: "center" }}
       >
-        {data.map((e) => {
+        {data.map((e , index) => {
           return (
-            <Card className="card" sx={{ maxWidth: 277, mx: 2, my: 2 }} key={e.id}>
+            <Card
+              className="card"
+              sx={{ maxWidth: 277, mx: 2, my: 2 }}
+              key={e.id}
+            >
               <CardMedia
                 component="img"
                 height="277"
@@ -86,14 +118,43 @@ const Home = () => {
                 disableSpacing
                 sx={{ justifyContent: "space-between" }}
               >
-                <Button
-                  sx={{ textTransform: "capitalize" }}
-                  variant="contained"
-                  color="primary"
-                  onClick={() => dispatch(addToCart(e))}
-                >
-                  add to Cart
-                </Button>
+                {/* Add Button */}
+                {selectedPrpdectID.includes(e.id) ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "50%",
+                      marginLeft: "-12px",
+                      alignItems: "center",
+                      justifyContent: "space-between ",
+                    }}
+                  >
+                    <IconButton
+                      sx={{ ml: "10px" }}
+                      onClick={() => dispatch(decreasNumberItems(e))}
+                    >
+                      <Remove />
+                    </IconButton>
+
+                    <StyledBadge badgeContent={productQuantity(e)} color="secondary" />
+
+                    <IconButton
+                      sx={{ mr: "10px" }}
+                      onClick={() => dispatch(increasNumberItems(e))}
+                    >
+                      <Add />
+                    </IconButton>
+                  </div>
+                ) : (
+                  <Button
+                    sx={{ textTransform: "capitalize" }}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => dispatch(addToCart(e))}
+                  >
+                    add to Cart
+                  </Button>
+                )}
 
                 <Typography variant="body1" color={theme.palette.success.light}>
                   {e.price + "$"}
