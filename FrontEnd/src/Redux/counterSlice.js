@@ -36,7 +36,7 @@ export const counterSlice = createSlice({
       const increasQuantty = state.selectedPrpdect.find((e) => {
         return e.id === action.payload.id;
       });
-      
+
       increasQuantty.quantity += 1;
 
       localStorage.setItem(

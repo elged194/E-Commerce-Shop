@@ -33,16 +33,19 @@ const Cart = () => {
     },
   }));
 
+  let subTotal = 0; // Sub Totale
+
   return (
     <Box sx={{ width: { md: "50%", xs: "90%" } }}>
       {selectedPrpdect.map((e) => {
+        subTotal += Number(e.price) * Number(e.quantity); // Sub Totale
+
         return (
           <Paper dir="rtl" className="item-container" key={e.id}>
             <div className="img-title-parent">
               <img src={e.imageLink} alt="" />
               <p className="product-name">{e.productName}</p>
             </div>
-
             <div
               style={{
                 display: "flex",
@@ -62,8 +65,11 @@ const Cart = () => {
               </IconButton>
             </div>
 
-            <div className="price">{e.price}$</div>
-
+            {/* Totale Items */}
+            <div className="price">
+              {Number(e.price) * Number(e.quantity)} $
+            </div>{" "}
+            
             <IconButton onClick={() => dispatch(deleteItem(e))}>
               <Delete color="error" />
             </IconButton>
@@ -82,7 +88,7 @@ const Cart = () => {
               Total :
             </Typography>
             <Typography variant="h6" p={2}>
-              200 $
+              {subTotal} $
             </Typography>
           </div>
         </div>
