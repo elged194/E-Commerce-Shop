@@ -70,6 +70,7 @@ const Home = () => {
     },
   }));
 
+  // Namber of quantity
   const productQuantity =(e)=>{
     const myProduct = selectedPrpdect.find((item ) => {
       return item.id === e.id

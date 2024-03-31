@@ -1,8 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  selectedPrpdect: [],
-  selectedPrpdectID: [],
+  selectedPrpdect: localStorage.getItem("selectedPrpdect")
+    ? JSON.parse(localStorage.getItem("selectedPrpdect"))
+    : [],
+  selectedPrpdectID: localStorage.getItem("selectedPrpdectID")
+    ? JSON.parse(localStorage.getItem("selectedPrpdectID"))
+    : [],
 };
 
 export const counterSlice = createSlice({
@@ -16,14 +20,31 @@ export const counterSlice = createSlice({
       state.selectedPrpdect.push(productQuantity);
 
       state.selectedPrpdectID.push(action.payload.id);
+
+      localStorage.setItem(
+        "selectedPrpdect",
+        JSON.stringify(state.selectedPrpdect)
+      );
+      localStorage.setItem(
+        "selectedPrpdectID",
+        JSON.stringify(state.selectedPrpdectID)
+      );
     },
+
     increasNumberItems: (state, action) => {
       // state.value += action.payload;
       const increasQuantty = state.selectedPrpdect.find((e) => {
         return e.id === action.payload.id;
       });
+      
       increasQuantty.quantity += 1;
+
+      localStorage.setItem(
+        "selectedPrpdect",
+        JSON.stringify(state.selectedPrpdect)
+      );
     },
+
     decreasNumberItems: (state, action) => {
       // state.value += action.payload;
       const increasQuantty = state.selectedPrpdect.find((e) => {
@@ -42,6 +63,15 @@ export const counterSlice = createSlice({
         });
         state.selectedPrpdectID = newArr2;
       }
+
+      localStorage.setItem(
+        "selectedPrpdect",
+        JSON.stringify(state.selectedPrpdect)
+      );
+      localStorage.setItem(
+        "selectedPrpdectID",
+        JSON.stringify(state.selectedPrpdectID)
+      );
     },
     deleteItem: (state, action) => {
       // state.value += action.payload;
@@ -49,6 +79,20 @@ export const counterSlice = createSlice({
         return e.id !== action.payload.id;
       });
       state.selectedPrpdect = newArr;
+
+      const newArr2 = state.selectedPrpdectID.filter((e) => {
+        return e !== action.payload.id;
+      });
+      state.selectedPrpdectID = newArr2;
+
+      localStorage.setItem(
+        "selectedPrpdect",
+        JSON.stringify(state.selectedPrpdect)
+      );
+      localStorage.setItem(
+        "selectedPrpdectID",
+        JSON.stringify(state.selectedPrpdectID)
+      );
     },
   },
 });
