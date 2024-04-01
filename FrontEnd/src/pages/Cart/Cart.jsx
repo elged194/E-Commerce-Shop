@@ -43,7 +43,7 @@ const Cart = () => {
         return (
           <Paper dir="rtl" className="item-container" key={e.id}>
             <div className="img-title-parent">
-              <img src={e.imageLink} alt="" />
+              <img src={e.imageLink[0]} alt="" />
               <p className="product-name">{e.productName}</p>
             </div>
             <div
@@ -80,7 +80,7 @@ const Cart = () => {
       <Paper>
         <div className="sub-total">
           <Typography variant="h6" p={2}>
-            Cart Summay
+            Check Out
           </Typography>
 
           <div>

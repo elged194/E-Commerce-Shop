@@ -23,6 +23,7 @@ import {
 import { Add, Remove } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // ------------------------------------------------------------------
 // const myListCard = [
@@ -58,6 +59,7 @@ const Home = () => {
   const { selectedPrpdectID ,selectedPrpdect } = useSelector((state) => state.cartt); // acces to the data in store
   const theme = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -107,8 +109,9 @@ const Home = () => {
               <CardMedia
                 component="img"
                 height="277"
-                image={e.imageLink}
+                image={e.imageLink[0]}
                 alt={e.productName}
+                onClick={ ()=> navigate(`prodect-detalis/${e.id}`)}
               />
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
