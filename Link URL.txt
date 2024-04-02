@@ -1,0 +1,9 @@
+
+----------------------- الموقع بتعنا -----------------------
+https://e-commerce-shop-react.netlify.app/
+
+----------------------- موقع رفع API -----------------------
+https://dashboard.render.com/
+
+----------------------- موقع رفع FrontEnd-----------------------
+https://app.netlify.com/sites/e-commerce-shop-react/overview
