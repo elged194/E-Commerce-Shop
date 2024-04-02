@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useRef, useState } from "react";
 import DetailsThumb from "./DetailsThumb ";
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Remove, ShoppingCart } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -136,7 +136,7 @@ const ProdectDetalis = () => {
                 color="primary"
                 onClick={() => dispatch(addToCart(data))}
               >
-                add to Cart
+                <ShoppingCart/> add to Cart
               </Button>
             )}
           </div>

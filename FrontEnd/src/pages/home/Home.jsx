@@ -20,7 +20,7 @@ import {
   decreasNumberItems,
   increasNumberItems,
 } from "../../Redux/counterSlice";
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Remove, ShoppingCart } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -156,7 +156,7 @@ const Home = () => {
                     color="primary"
                     onClick={() => dispatch(addToCart(e))}
                   >
-                    add to Cart
+                   <ShoppingCart/> add to Cart
                   </Button>
                 )}
 
